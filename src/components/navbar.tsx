@@ -1,5 +1,6 @@
 // src/components/Navbar.tsx
-import React from 'react';
+
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     return (
@@ -8,13 +9,16 @@ const Navbar = () => {
                 <a href="/" className="text-white text-lg font-bold">Appointment Scheduler</a>
                 <ul className="flex space-x-4">
                     <li>
-                        <a href="/" className="text-white hover:text-gray-300">Home</a>
+                    <Link to="/" className="text-white hover:text-gray-300"> Home </Link>
                     </li>
                     <li>
-                        <a href="/login" className="text-white hover:text-gray-300">Login</a>
+                    <Link to="/login" className="text-white hover:text-gray-300"> Login </Link>
                     </li>
                     <li>
-                        <a href="/register" className="text-white hover:text-gray-300">Register</a>
+                    <Link to="/register" className="text-white hover:text-gray-300"> Register </Link>
+                    </li>
+                    <li>
+                    <Link to="/Appointments" className="text-white hover:text-gray-300"> Appointments </Link>
                     </li>
                 </ul>
             </div>
@@ -23,3 +27,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+
