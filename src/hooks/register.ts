@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { createAppointment } from '../services/appointmentServices';
+import { createRegister } from '../services/userServices';
 
-const createAppointments = () => {
+const register= () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
 
-  const AddAppointment = async (Appointment:any) => {
+  const fetchCreateRegister = async (user:any) => {
     setIsLoading(true);
     try {
-      const response = await createAppointment(Appointment);
+      const response = await createRegister(user);
       setData(response.data);
     } catch {
       setError(error);
@@ -17,7 +17,7 @@ const createAppointments = () => {
     setIsLoading(false);
   };
 
-  return { AddAppointment, isLoading, error, data };
+  return { fetchCreateRegister, isLoading, error, data };
 };
 
-export default createAppointments;
+export default register;
