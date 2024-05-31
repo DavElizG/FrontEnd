@@ -1,7 +1,7 @@
 // useFetchProductEdit.ts
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getAppointmentsById,updateAppointment } from '../services/AppointmentServices';
+import { getAppointmentsById,updateAppointment } from '../services/appointmentServices';
 import { Appointment } from '../types/Types';
 
 const useFetchProductEdit = () => {

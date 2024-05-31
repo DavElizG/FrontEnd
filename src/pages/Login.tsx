@@ -1,31 +1,33 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios"; // Importa Axios
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
-    const [formData, setFormData] = useState({
-        Email: "",
-        password: ""
-    });
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleChange = (e:any) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value
-        }));
-    };
-
-    const handleSubmit = async (e:any) => {
-        e.preventDefault();
+    const handleSubmit = async (event:any) => {
+        event.preventDefault();
         try {
-            const response = await axios.post("URL_DEL_BACKEND/login", formData); // Utiliza Axios para la solicitud POST
-            const { token } = response.data;
-            localStorage.setItem("token", token);
-            navigate("/dashboard");
+            const response = await axios.post('https://localhost:7108/api/Users/login', {
+                email,
+                password,
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            console.log(response.data); // Agregar este console.log para ver la respuesta completa de la API
+            
+            const { token } = response.data; // Ajustar esto según la estructura de la respuesta
+            localStorage.setItem('token', token);
+            console.log(token);
+            navigate('/Appointments'); 
         } catch (error) {
-            console.error("Error al iniciar sesión:", error);
+            console.error('Error en la autenticación', error);
+            alert('Credenciales incorrectas');
         }
     };
 
@@ -39,14 +41,14 @@ const Login = () => {
                     </h2>
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <div>
-                            <label htmlFor="Email" className="block text-sm font-medium text-gray-700">Email</label>
+                            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Email</label>
                             <div className="mt-1">
                                 <input
-                                    name="Email"
+                                    name="username"
                                     type="text"
-                                    value={formData.Email}
-                                    onChange={handleChange}
                                     required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     className="px-2 py-3 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
                                 />
                             </div>
@@ -57,10 +59,10 @@ const Login = () => {
                                 <input
                                     name="password"
                                     type="password"
-                                    value={formData.password}
-                                    onChange={handleChange}
                                     autoComplete="current-password"
                                     required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     className="px-2 py-3 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
                                 />
                             </div>
@@ -75,9 +77,7 @@ const Login = () => {
                         </div>
                         <div className="text-center text-sm">
                             <p className="text-gray-700">Don't have an account?</p>
-                            <Link to="/register" className="text-blue-600 hover:underlin">
-                                Sign up here
-                            </Link>
+                            <Link to="/register" className="text-blue-600 hover:underline">Sign up here</Link>
                         </div>
                     </form>
                 </div>
