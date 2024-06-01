@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../context/AuthProvider'; // Aj // Ajusta la ruta según sea necesario
+
+
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const { setToken } = useAuth();
     const navigate = useNavigate();
 
-    const handleSubmit = async (event:any) => {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         try {
             const response = await axios.post('https://localhost:7108/api/Users/login', {
@@ -18,13 +22,12 @@ const Login = () => {
                     'Content-Type': 'application/json'
                 }
             });
-            
-            console.log(response.data); // Agregar este console.log para ver la respuesta completa de la API
-            
-            const { token } = response.data; // Ajustar esto según la estructura de la respuesta
-            localStorage.setItem('token', token);
-            console.log(token);
-            navigate('/Appointments'); 
+
+            console.log(response.data);
+
+            const token: string = response.data; // Ajusta esto según la estructura de la respuesta
+            setToken(token);
+            navigate('/Appointments');
         } catch (error) {
             console.error('Error en la autenticación', error);
             alert('Credenciales incorrectas');
@@ -41,10 +44,10 @@ const Login = () => {
                     </h2>
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <div>
-                            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Email</label>
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                             <div className="mt-1">
                                 <input
-                                    name="username"
+                                    name="email"
                                     type="text"
                                     required
                                     value={email}
