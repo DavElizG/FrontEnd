@@ -4,7 +4,7 @@ import AppointmentDashboard from '../pages/AppointmentDashboard';
 import Home from '../pages/Home';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
-
+import AdminDashboard from '../pages/AdminDashboard';
 
 const AppRouter: React.FC = () => {
   return (
@@ -14,6 +14,7 @@ const AppRouter: React.FC = () => {
         <Route path="/Login" element={ <Login/>} />
         <Route path="/Register" element={ <Register/>} />
         <Route path="/Appointments" element={<AppointmentDashboard />} />  
+        <Route path="/Admin" element={<AdminDashboard />} />  
     </Routes>
     </BrowserRouter>    
   );
