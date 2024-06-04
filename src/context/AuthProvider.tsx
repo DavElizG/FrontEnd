@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useMemo, useContext, ReactNode } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode'; 
+import {jwtDecode} from 'jwt-decode'; 
 import { User } from '../types/Types'; 
-
-
 
 interface AuthContextProps {
     token: string | null;
@@ -37,10 +35,11 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const setToken = (newToken: string | null) => {
         setToken_(newToken);
         if (newToken) {
-            const decodedUser:any =  jwtDecode(newToken);
-            setUser(decodedUser);
-            localStorage.setItem('user', decodedUser);
-            console.log(decodedUser)
+            const decodedToken: any = jwtDecode(newToken);
+            const userId = decodedToken.userId || decodedToken.sub; // Intenta obtener userId o sub si está presente
+            const user = { ...decodedToken, userId };
+            setUser(user);
+            localStorage.setItem('user', JSON.stringify(user));
         } else {
             setUser(null);
             localStorage.removeItem('user');

@@ -1,22 +1,30 @@
 import axios from "axios";
+import { Appointment } from "../types/Types";
 
-const baseURL = 'ApiURL';
+const baseURL = 'https://localhost:7108/api/Appointments';
 
 export const getAppointmentService = async () => {
     const response = await axios.get(baseURL);
     return response;
 } 
 
-export const getAppointmentsById = async (AppointmentID:any) => {
-    const response = await axios.get(`${baseURL}/${AppointmentID}`);
-    return response;
-    
-} 
 
-export const createAppointment = async (Appointment:any) => {
-    const response = await axios.post(`${baseURL}`, Appointment);
-    return response;
-} 
+
+export const getAppointmentsById = async (userId: number): Promise<Appointment[]> => {
+    const response = await axios.get<Appointment[]>(`${baseURL}/user/${userId}`);
+    return response.data;
+};
+
+
+export const createAppointment = async (appointment:any) => {
+    try {
+        const response = await axios.post(baseURL, appointment);
+        return response;
+    } catch (error) {
+        console.error('Error en el servicio de creación de citas', error);
+        throw error;
+    }
+};
 
 export const deleteAppointment = async (AppointmentId:any) => {
       const response = await axios.delete(`${baseURL}/${AppointmentId}`);
