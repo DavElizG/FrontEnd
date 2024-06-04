@@ -23,6 +23,5 @@ export type Appointment ={
 AppointmentID: number,
 DateTime: Date;
 Location: string;
-Status: string;
-AppointmentType: string;
+typeOfAppointment: string;
 } 

@@ -3,15 +3,16 @@ import { createAppointment } from '../services/appointmentServices';
 
 const createAppointments = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
+  const [error, setError] = useState<any>(null);
+  const [data, setData] = useState<any>(null);
 
-  const AddAppointment = async (Appointment:any) => {
+  const AddAppointment = async (appointment: any) => {
     setIsLoading(true);
     try {
-      const response = await createAppointment(Appointment);
+      const response = await createAppointment(appointment);
       setData(response.data);
-    } catch {
+      setError(null); // Limpiar el error después de una respuesta exitosa
+    } catch (error: any) {
       setError(error);
     }
     setIsLoading(false);
