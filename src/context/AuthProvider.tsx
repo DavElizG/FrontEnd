@@ -32,19 +32,20 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     }, []);
 
-    const setToken = (newToken: string | null) => {
-        setToken_(newToken);
-        if (newToken) {
-            const decodedToken: any = jwtDecode(newToken);
-            const userId = decodedToken.userId || decodedToken.sub; // Intenta obtener userId o sub si está presente
-            const user = { ...decodedToken, userId };
-            setUser(user);
-            localStorage.setItem('user', JSON.stringify(user));
-        } else {
-            setUser(null);
-            localStorage.removeItem('user');
-        }
-    };
+const setToken = (newToken: string | null) => {
+    setToken_(newToken);
+    if (newToken) {
+        const decodedToken: any = jwtDecode(newToken);
+        console.log("Decoded token:", decodedToken); // Aquí está el console.log
+        const userId = decodedToken.userId || decodedToken.sub; // Intenta obtener userId o sub si está presente
+        const user = { ...decodedToken, userId };
+        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
+    } else {
+        setUser(null);
+        localStorage.removeItem('user');
+    }
+};
 
     useEffect(() => {
         if (token) {

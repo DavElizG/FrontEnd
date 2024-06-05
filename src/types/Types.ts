@@ -1,7 +1,8 @@
 export type User = {
-UserId: number,
+id: any
+NameIdentifier: number,
 Name:string,
-PhoneNumber: string,
+    MobilePhone: string,
 Email:string,
 Password: string
 

@@ -17,9 +17,9 @@ const Navbar = () => {
                 <a href="/" className="text-white text-lg font-bold">Appointment Scheduler</a>
                 <ul className="flex space-x-4">
                 {user ? (
-                        <li className="text-white">
-                            {`${user["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]} (${user["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"]}) - ${user["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/mobilephone"]}`}
-                        </li>
+                       <li className="text-white">
+                         {`${user["Name"]} (${user["Email"]}) - ${user["MobilePhone"]}`}
+                         </li>
                     ) : (
                         <li className="text-white">Not logged in</li>
                     )}
