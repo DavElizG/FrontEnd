@@ -6,6 +6,7 @@ const HomePage = () => {
     return (
         <div>
         <Navbar />
+            
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="text-center max-w-md">
                 <h1 className="text-4xl font-bold text-sky-4000 mb-4">Welcome to the Appointment Scheduler</h1>

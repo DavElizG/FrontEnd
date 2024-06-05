@@ -10,7 +10,7 @@ const Navbar = () => {
         setToken(null);
         navigate('/Login');
     };
-
+  
     return (
         <nav className="bg-sky-400 p-4 fixed w-full top-0 z-10">
             <div className="container mx-auto flex justify-between items-center">
@@ -30,6 +30,9 @@ const Navbar = () => {
                     </li>
                     <li>
                         <Link to="/Appointments" className="text-white hover:text-yellow-300"> Appointments </Link>
+                    </li>
+                    <li>
+                        <Link to="/Admin" className="text-white hover:text-yellow-300"> Admin </Link>
                     </li>
 
                     {user ?(<button onClick={handleLogout} className="text-white hover:text-gray-300">

@@ -20,9 +20,13 @@ Name: string
 Address:string
 }
 
-export type Appointment ={
-AppointmentID: number,
-DateTime: Date;
-Location: string;
-typeOfAppointment: string;
-} 
+export type Appointment = {
+  id: number,
+  appointmentDate: Date,
+  location: string,
+  status: boolean,
+  typeOfAppointment: string,
+  userId: number, 
+  clinicId: number,
+
+}
