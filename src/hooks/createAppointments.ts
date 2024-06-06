@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const createAppointments = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,26 +17,29 @@ const createAppointments = () => {
         body: JSON.stringify(appointment)
       });
 
-if (!response.ok) {
-  let errorData;
-  const contentType = response.headers.get("content-type");
-  if (contentType && contentType.indexOf("application/json") !== -1) {
-    errorData = await response.json();
-  } else {
-    errorData = await response.text();
-  }
-  console.error('Server error:', errorData);
-  throw new Error('Error en el servicio de creación de citas');
-}
+      if (!response.ok) {
+        let errorData;
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+          errorData = await response.json();
+        } else {
+          errorData = await response.text();
+        }
+        console.error('Server error:', errorData);
+        throw new Error('Error en el servicio de creación de citas');
+      }
 
       const data = await response.json();
       setData(data);
       setError(null); // Limpiar el error después de una respuesta exitosa
+      window.location.reload();
     } catch (error: any) {
       setError(error);
     }
     setIsLoading(false);
   };
+
+  
 
   return { AddAppointment, isLoading, error, data };
 };

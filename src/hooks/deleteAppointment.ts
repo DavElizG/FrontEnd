@@ -4,15 +4,18 @@ import { deleteAppointment } from '../services/appointmentServices';
 const RemoveAppointment = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<any>(null);
+  const [showModal, setShowModal] = useState(false);
 
   const DeleteAppointment = async (AppointmentId: any) => {
     setIsLoading(true);
     try {
       const response = await deleteAppointment(AppointmentId);
       setError(null); // Limpiar el error después de una respuesta exitosa
+      window.location.reload();
       return response;
     } catch (error) {
       console.error('Error en el servicio de eliminación de citas', error);
+      setShowModal(true);
       setError(error);
     } finally {
       setIsLoading(false);
@@ -28,7 +31,7 @@ const RemoveAppointment = () => {
     }
   };
 
-  return { handleDelete, isLoading, error };
+  return { handleDelete, isLoading, error, showModal, setShowModal };
 };
 
 export default RemoveAppointment;
