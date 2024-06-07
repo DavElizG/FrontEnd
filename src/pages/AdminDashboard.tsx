@@ -49,7 +49,7 @@ const AdminDashboard = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{appointment.location}</td>
 
-                <button className="text-red-500 inline-flex items-center md:mb-2 lg:mb-0 ml-4" onClick={() => handleDelete(appointment.id, () => { /* Aquí puedes agregar código para actualizar la lista de citas */ })}>Eliminar
+                <button className="text-red-500 inline-flex items-center md:mb-2 lg:mb-0 ml-4" onClick={() => handleDelete(appointment.id, () => {})}>Eliminar
                   <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
                     <path d="M6 18L18 6M6 6l12 12"></path>
                   </svg>
