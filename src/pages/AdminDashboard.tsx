@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import Navbar from '../components/navbar';
 import useAppointments from '../hooks/useAppointments';
 import RemoveAppointment from '../hooks/deleteAppointment';
-import ConfirmModal from '../components/ConfirmModal';
+
 
 
 
 const AdminDashboard = () => {
   const { appointments, loading, error } = useAppointments();
   const { handleDelete } = RemoveAppointment();
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [appointmentToDeleteId, setAppointmentToDeleteId] = useState('');
+  
+  
 
   if (loading) {
     return <div className="p-4">Cargando...</div>;
@@ -20,12 +20,7 @@ const AdminDashboard = () => {
     return <div className="p-4">Error: {error.message}</div>;
   }
 
-  const handleConfirmDelete = () => {
-    handleDelete(appointmentToDeleteId, () => {
-      // Lógica adicional después de eliminar la cita
-    });
-    setShowConfirmModal(false);
-  };
+  
 
   return (
     <>
@@ -56,9 +51,8 @@ const AdminDashboard = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{appointment.location}</td>
                     <td>
                       <button className="bg-white hover:bg-gray-100 w-30 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mr-4" onClick={() => {
-                        setAppointmentToDeleteId(appointment.id);
-                        setShowConfirmModal(true);
-                      }}>Eliminar
+                        handleDelete(appointment.id);
+}}>Eliminar
                         <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
                           <path d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
@@ -71,12 +65,7 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-      <ConfirmModal
-        show={showConfirmModal}
-        handleClose={() => setShowConfirmModal(false)}
-        handleConfirm={handleConfirmDelete}
-        message="¿Estás seguro de que deseas eliminar esta cita?"
-      />
+      
     </>
   );
 };
