@@ -3,6 +3,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { User } from '../types/Types'; 
+import ErrorPage from '../pages/ErrorPage';
 
 interface ProtectedRoutesProps {
   user: User | null;
@@ -20,7 +21,7 @@ const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ user, requiredRole, c
 
   if (requiredRole !== undefined && user && Number(user.RoleId) !== requiredRole) {
     console.log("User does not have the required role. Redirecting to /");
-    return <Navigate to="/" />;
+    return <ErrorPage/>;
   }
 
   return <>{children}</>;
