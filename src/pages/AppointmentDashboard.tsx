@@ -35,10 +35,10 @@ const AppointmentDashboard = () => {
 
     try {
       await AddAppointment(appointmentData, token);
-      setShowModal(true);
+      
       reset();
       setLocation('');
-      
+      setShowModal(true);
     } catch (error) {
       
       

@@ -1,4 +1,3 @@
-// Importar los componentes necesarios
 import React, { useState } from 'react';
 import useGetAppointment from '../hooks/getAppointments';
 import RemoveAppointment from '../hooks/deleteAppointment';
@@ -8,40 +7,32 @@ import ErrorHoras from './ErrorHoras';
 import UpdateAppointmentForm from './Update';
 import { Appointment } from '../types/Types';
 
-// Definir el componente AppointmentCard
 const AppointmentCard = ({ token }: { token: string }) => {
-  // Obtener los datos de la cita y los métodos necesarios
   const { data, isLoading, error, refetch } = useGetAppointment(token);
   const { handleDelete, showModal, setShowModal } = RemoveAppointment();
-  const { handleCancel, isErrorModalOpen, handleCloseErrorModal } = useCancelAppointment();
-  const [isErrorHorasOpen, setIsErrorHorasOpen] = useState(false);
+  const { handleCancel, isErrorModalOpen, isErrorhorasOpen, handleCloseErrorHoras } = useCancelAppointment();
 
   const [isEditing, setIsEditing] = useState(false);
   const [editingAppointment, setEditingAppointment] = useState(null);
 
-  // Función para manejar la edición de la cita
   const handleEdit = (appointment: any) => {
     setIsEditing(true);
     setEditingAppointment(appointment);
   };
 
-  // Función para cancelar la edición de la cita
   const handleCancelEdit = () => {
     setIsEditing(false);
     setEditingAppointment(null);
   };
 
-  // Si se están cargando los datos, mostrar un mensaje de carga
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  // Si hay un error, mostrar un mensaje de error
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
-  // Renderizar las citas
   return (
     <div className="flex flex-wrap -m-4">
       {data && data.map((appointment: { id: string | number; appointmentDate: Date; status: any; location: string | number; Name: string }, index: React.Key) => (
@@ -72,10 +63,7 @@ const AppointmentCard = ({ token }: { token: string }) => {
                         <path d="M6 18L18 6M6 6l12 12"></path>
                       </svg>
                     </button>
-                    <button className="text-left bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow " onClick={() => {
-                      handleCancel(String(appointment.id));
-                      setIsErrorHorasOpen(true);
-                    }}>Cancelar
+                    <button className="text-left bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow " onClick={() => handleCancel(appointment.id)}>Cancelar
                       <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className=" w-4 h-4 ml-2" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="10"></circle>
                         <line x1="15" y1="9" x2="9" y2="15"></line>
@@ -89,10 +77,9 @@ const AppointmentCard = ({ token }: { token: string }) => {
           </div>
         </div>
       ))}
-      {/* Mostrar el modal de error si está abierto */}
-      {isErrorModalOpen && <ErrorModal show={showModal} handleClose={() => setShowModal(false)} />}
-      {/* Mostrar el modal de ErrorHoras si está abierto */}
-      {isErrorHorasOpen && <ErrorHoras isOpen={isErrorHorasOpen} handleClose={() => setIsErrorHorasOpen(false)} />}
+      {isErrorModalOpen && <ErrorModal show={isErrorModalOpen} handleClose={() => setShowModal(false)} />}
+      {isErrorhorasOpen && <ErrorHoras isOpen={isErrorhorasOpen} handleClose={handleCloseErrorHoras} />}
+      {showModal && <ErrorModal show={showModal} handleClose={() => setShowModal(false)} />}
     </div>
   );  
 };
