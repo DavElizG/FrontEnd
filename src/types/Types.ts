@@ -1,15 +1,15 @@
 export type User = {
-id: any
-NameIdentifier: number,
-Name:string,
-    MobilePhone: string,
-Email:string,
-Password: string
-
+  id: any
+  NameIdentifier: number,
+  Name: string,
+  MobilePhone: string,
+  Email: string,
+  Password: string,
+  RoleId: number 
 }
 
 export type Role= {
-RoleID:number,
+RoleId:number,
 Name:string
 
 }

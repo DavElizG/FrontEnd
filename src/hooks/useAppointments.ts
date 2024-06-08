@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthProvider';
 import { Appointment } from '../types/Types';
-import { getAppointment } from '../services/appointmentServices';
-
+import { getToday } from '../services/appointmentServices';
+import { useEffect, useState } from 'react';
 
 const useAppointments = () => {
     const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -14,15 +13,18 @@ const useAppointments = () => {
         const fetchAppointments = async () => {
             try {
                 setLoading(true);
-                const response = await getAppointment(); // Usar la función getAppointment
+                const response = await getToday(); // Usar la función getAppointment
 
-                // Verifica que la respuesta sea un array
+               
                 if (Array.isArray(response.data)) {
+                   
+                   
+
                     setAppointments(response.data);
                 } else {
                     setAppointments([]);
                 }
-            } catch (error) {
+            } catch  {
                 setError(error);
                 setAppointments([]); // En caso de error, inicializa appointments como un array vacío
             } finally {
@@ -31,9 +33,8 @@ const useAppointments = () => {
         };
 
         fetchAppointments();
-    }, [token]);
+    }, [token]); // Dependencia en el token para que se vuelva a ejecutar cuando este cambie
 
     return { appointments, loading, error };
 };
-
 export default useAppointments;
