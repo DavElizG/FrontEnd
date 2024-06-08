@@ -26,17 +26,19 @@ const createAppointments = () => {
           errorData = await response.text();
         }
         console.error('Server error:', errorData);
-        throw new Error('Error en el servicio de creación de citas');
+        throw alert('Error en el servicio de creación de citas, la cita NO ha sido creada');
+        
       }
 
       const data = await response.json();
       setData(data);
       setError(null); // Limpiar el error después de una respuesta exitosa
-      window.location.reload();
+      
     } catch (error: any) {
       setError(error);
     }
     setIsLoading(false);
+    
   };
 
   

@@ -13,17 +13,17 @@ export const getAppointment = async () => {
     });
     return response;
 };
-
-export const getAppointmentsById = async (userId: number): Promise<Appointment[]> => {
-    const token = localStorage.getItem('token'); // Obtener el token del localStorage
-    const response = await axios.get<Appointment[]>(`${baseURL}/user/${userId}`, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        }
-    });
-    return response.data;
+export const getToday = async () => {
+  const token = localStorage.getItem('token'); // Obtener el token del localStorage
+  const response = await axios.get(`${baseURL}/today`, {
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+      }
+  });
+  return response;
 };
+
 
 export const createAppointment = async (appointment: any) => {
   const token = localStorage.getItem('token'); // Obtener el token del localStorage
@@ -51,7 +51,7 @@ export const deleteAppointment = async (AppointmentId: any) => {
   return response;
 };
 
-export const updateAppointment = async (AppointmentId: string, Appointment: any) => {
+export const updateAppointment = async (AppointmentId: any, Appointment: any) => {
   const token = localStorage.getItem('token'); // Obtener el token del localStorage
   const response = await axios.put(`${baseURL}/${AppointmentId}`, Appointment, {
     headers: {

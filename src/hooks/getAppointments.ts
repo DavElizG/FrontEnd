@@ -1,38 +1,25 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthProvider';
+import { getAppointment } from '../services/appointmentServices'; // Asegúrate de importar getAppointment desde el archivo correcto
 
-const useGetAppointment = (token: string) => {
+const useGetAppointment = () => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const { user, token } = useAuth();
+
   useEffect(() => {
     const fetchAppointment = async () => {
-      const token = localStorage.getItem('token'); // Obtener el token del localStorage
-      console.log("Token: ", token); // Imprimir el token en la consola
       setIsLoading(true);
       try {
-        const response = await fetch('https://localhost:7108/api/Appointments', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        });
+        const response = await getAppointment(); // Usamos getAppointment en lugar de fetch
 
-        if (!response.ok) {
-          let errorData;
-          const contentType = response.headers.get("content-type");
-          if (contentType && contentType.indexOf("application/json") !== -1) {
-            errorData = await response.json();
-          } else {
-            errorData = await response.text();
-          }
-          console.error('Server error:', errorData);
-          throw new Error('Error en el servicio de obtención de citas');
-        }
-
-        const data = await response.json();
-        setData(data);
+        const allData = response.data; // Usamos response.data ya que axios devuelve los datos aquí
+        const userId = parseInt(user?.NameIdentifier); // Usa el NameIdentifier del user
+        const userData = allData.filter((appointment: any) => appointment.userId === userId);
+        console.log('User appointments:', userData); // Muestra las citas del usuario en la consola
+        setData(userData);
         setError(null); // Limpiar el error después de una respuesta exitosa
       } catch (error: any) {
         setError(error);
@@ -40,8 +27,10 @@ const useGetAppointment = (token: string) => {
       setIsLoading(false);
     };
 
-    fetchAppointment();
-  }, [token]);
+    if (token && user) { // Solo hacer la petición si el token y el user están presentes
+      fetchAppointment();
+    }
+  }, [token, user]); // Asegúrate de incluir token y user en la lista de dependencias
 
   return { data, isLoading, error };
 };

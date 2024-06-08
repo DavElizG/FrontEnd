@@ -1,12 +1,12 @@
 import { Modal, Button } from 'react-bootstrap';
 
-const ErrorModal = ({ show, handleClose }) => {
+const CreationModal = ({ show, handleClose }) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-      <Modal.Title style={{ color: 'red' }}>Error</Modal.Title>
+        <Modal.Title style={{ color: 'green' }}>Cita Creada</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Solo los administradores tienen acceso a esta funcion</Modal.Body>
+      <Modal.Body>¡La cita se ha creado con éxito!</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Cerrar
@@ -16,4 +16,4 @@ const ErrorModal = ({ show, handleClose }) => {
   );
 };
 
-export default ErrorModal;
+export default CreationModal;
