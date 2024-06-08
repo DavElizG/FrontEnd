@@ -27,6 +27,7 @@ const RemoveAppointment = () => {
       await DeleteAppointment(appointmentId);
       onSuccess(); // Llamar a la función de devolución de llamada después de una eliminación exitosa
     } catch (error) {
+      
       console.error('Error al eliminar la cita', error);
     }
   };
